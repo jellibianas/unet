@@ -1,0 +1,84 @@
+default:
+    formatters:
+        pretty:
+            verbose: true
+    suites:
+        homepage:
+            contexts:
+                - Behat\MinkExtension\Context\MinkContext
+                - SymEdit\Bundle\CoreBundle\Behat\WebContext
+            filters:
+                tags: "@homepage"
+        pages:
+            contexts:
+                - Behat\MinkExtension\Context\MinkContext
+                - SymEdit\Bundle\CoreBundle\Behat\WebContext
+            filters:
+                tags: "@pages"
+        blog:
+            contexts:
+                - Behat\MinkExtension\Context\MinkContext
+                - SymEdit\Bundle\CoreBundle\Behat\WebContext
+                - SymEdit\Bundle\BlogBundle\Behat\BlogContext
+            filters:
+                tags: "@blog, @posts"
+        gallery:
+            contexts:
+                - Behat\MinkExtension\Context\MinkContext
+                - SymEdit\Bundle\CoreBundle\Behat\WebContext
+            filters:
+                tags: "@gallery"
+        sitemap:
+            contexts:
+                - Behat\MinkExtension\Context\MinkContext
+                - SymEdit\Bundle\CoreBundle\Behat\WebContext
+                - SymEdit\Bundle\CoreBundle\Behat\SitemapContext
+            filters:
+                tags: "@sitemap"
+        contact:
+            contexts:
+                - Behat\MinkExtension\Context\MinkContext
+                - SymEdit\Bundle\CoreBundle\Behat\WebContext
+                - SymEdit\Bundle\CoreBundle\Behat\MailerContext
+            filters:
+                tags: "@contact"
+        analytics:
+            contexts:
+                - Behat\MinkExtension\Context\MinkContext
+                - SymEdit\Bundle\CoreBundle\Behat\WebContext
+                - SymEdit\Bundle\BlogBundle\Behat\BlogContext
+                - SymEdit\Bundle\CoreBundle\Behat\AnalyticsContext
+            filters:
+                tags: "@analytics"
+        widgets:
+            contexts:
+                - Behat\MinkExtension\Context\MinkContext
+                - SymEdit\Bundle\CoreBundle\Behat\WebContext
+                - SymEdit\Bundle\WidgetBundle\Behat\WidgetContext
+            filters:
+                tags: "@widgets"
+        settings:
+            contexts:
+                - Behat\MinkExtension\Context\MinkContext
+                - SymEdit\Bundle\CoreBundle\Behat\WebContext
+            filters:
+                tags: "@settings"
+        form_builder:
+            contexts:
+                - Behat\MinkExtension\Context\MinkContext
+                - SymEdit\Bundle\CoreBundle\Behat\WebContext
+            filters:
+                tags: "@form_builder"
+        seo:
+            contexts:
+                - Behat\MinkExtension\Context\MinkContext
+                - SymEdit\Bundle\CoreBundle\Behat\WebContext
+                - SymEdit\Bundle\CoreBundle\Behat\SeoContext
+            filters:
+                tags: "@seo"
+    extensions:
+        Behat\MinkExtension:
+            sessions:
+                default:
+                    symfony2: ~
+        Behat\Symfony2Extension: ~

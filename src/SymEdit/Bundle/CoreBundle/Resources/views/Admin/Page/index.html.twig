@@ -1,0 +1,33 @@
+{% extends '@SymEdit/Admin/base.html.twig' %}
+
+{% macro tree(node) %}
+    {% if node.children|length > 0 %}
+        <ul data-toggle="sortable" data-url="{{ path('admin_page_reorder') }}">
+            {% for child in node.children %}
+                <li data-id="{{ child.id }}">
+                    <a href="{{ path('admin_page_update', {id:child.id}) }}">
+                        {% if child.homepage %}
+                            {{ icon('home') }}
+                        {% else %}
+                            {% if child.pageController %}
+                                {{ icon('filter') }}
+                            {% else %}
+                                {{ icon('file') }}
+                            {% endif %}
+                        {% endif %}
+                        {{ child.title }}
+                    </a>
+                    {{ _self.tree( child ) }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endmacro %}
+
+{% block title %}Showing Pages{% endblock %}
+
+{% block content %}
+    <div class="tree" id="page-tree">
+        {{ _self.tree(pages) }}
+    </div>
+{% endblock %}

@@ -1,0 +1,13 @@
+
+# These are here instead so you can override the default routing.yml in your
+# child bundles and just include this from there.
+
+symedit_fos:
+    resource: "@SymEditBundle/Resources/config/routing/fos.yml"
+
+symedit_admin:
+    resource: "@SymEditBundle/Resources/config/routing/admin.yml"
+    prefix: /sym-admin
+
+symedit_controllers:
+    resource: "@SymEditBundle/Resources/config/routing/frontend.yml"

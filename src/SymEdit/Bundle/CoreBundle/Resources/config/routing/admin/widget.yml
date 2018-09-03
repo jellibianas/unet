@@ -1,0 +1,58 @@
+admin_widget:
+    path: /
+    methods: [GET]
+    defaults:
+        _controller: symedit.controller.widget:indexAction
+        _sylius:
+            template: "@SymEdit/Admin/Widget/index.html.twig"
+
+admin_widget_choose:
+    path: /new
+    methods: [GET]
+    defaults:
+        _controller: symedit.controller.widget:chooseAction
+        _sylius:
+            template: "@SymEdit/Admin/Widget/choose.html.twig"
+
+admin_widget_create:
+    path: /new/{strategyName}
+    methods: [GET, POST]
+    defaults:
+        _controller: symedit.controller.widget:createAction
+        _sylius:
+            template: "@SymEdit/Admin/Widget/new.html.twig"
+            redirect:
+                route: admin_widget_update
+                parameters: { id: resource.id }
+            factory:
+                method: createFromStrategy
+                arguments: [$strategyName]
+
+admin_widget_update:
+    path: /{id}/edit
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: symedit.controller.widget:updateAction
+        _sylius:
+            template: "@SymEdit/Admin/Widget/edit.html.twig"
+            redirect:
+                route: admin_widget_update
+                parameters: { id: $id }
+
+admin_widget_delete:
+    path: /{id}/delete
+    methods: [DELETE]
+    defaults:
+        _controller: symedit.controller.widget:deleteAction
+        _sylius:
+            redirect: admin_widget
+
+admin_widget_reorder:
+    path: /reorder
+    methods: [POST]
+    defaults:
+        _controller: symedit.controller.widget:reorderAction
+        _sylius:
+            sortable_position: widgetOrder
+            criteria:
+                id: $id

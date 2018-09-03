@@ -1,0 +1,30 @@
+<?php
+
+/*
+ * This file is part of the SymEdit package.
+ *
+ * (c) Craig Blanchette <craig.blanchette@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace SymEdit\Bundle\CacheBundle;
+
+use SymEdit\Bundle\CacheBundle\DependencyInjection\Compiler\AddCacheVotersPass;
+use SymEdit\Bundle\CacheBundle\DependencyInjection\SymEditCacheExtension;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
+
+class SymEditCacheBundle extends Bundle
+{
+    public function build(ContainerBuilder $container)
+    {
+        $container->addCompilerPass(new AddCacheVotersPass());
+    }
+
+    public function getContainerExtension()
+    {
+        return new SymEditCacheExtension();
+    }
+}

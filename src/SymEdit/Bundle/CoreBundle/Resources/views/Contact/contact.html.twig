@@ -1,0 +1,19 @@
+{% extends '@SymEdit/Email/base.html.twig' %}
+
+{% block subject %}{{ sylius_settings('company')['name'] }} - Contact Submission{% endblock %}
+
+{% block body_html '' %}
+
+{% block body_text %}
+Name:
+                              {{ Form.name }}
+
+Email:
+                              {{ Form.email }}
+
+Phone:
+                              {{ Form.phone }}
+
+Message:
+                              {{ Form.message }}
+{% endblock %}

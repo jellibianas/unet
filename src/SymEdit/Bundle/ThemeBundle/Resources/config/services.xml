@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <!-- Stylizer Styles Loader -->
+        <service id="symedit_theme.stylizer.yaml_loader" class="SymEdit\Bundle\ThemeBundle\Stylizer\Loader\YamlThemeLoader">
+            <argument type="service" id="symedit_theme.theme" />
+            <tag name="stylizer.loader" />
+        </service>
+
+        <!-- Stylizer Storage -->
+        <service id="symedit_theme.stylizer.storage.theme" class="SymEdit\Bundle\ThemeBundle\Stylizer\Storage\ThemeYamlStorage">
+            <argument type="service" id="symedit_theme.theme" />
+        </service>
+
+        <!-- Assetic Theme Loader -->
+        <service id="symedit_theme.assetic.theme_loader" class="SymEdit\Bundle\ThemeBundle\Assetic\Factory\Loader\ThemeLoader" public="false">
+            <tag name="assetic.formula_loader" alias="theme" />
+        </service>
+
+        <!-- Assetic Theme Resource -->
+        <service id="symedit_theme.theme_resource" class="SymEdit\Bundle\ThemeBundle\Assetic\Factory\Resource\ThemeResource" public="false">
+            <argument type="service" id="symedit_theme.theme" />
+            <tag name="assetic.formula_resource" loader="theme" />
+        </service>
+
+        <!-- Assetic Theme Directory Resource -->
+        <service id="symedit_theme.twig.theme_resource" class="SymEdit\Bundle\ThemeBundle\Assetic\Factory\Resource\ThemeTwigResource">
+            <argument type="service" id="symedit_theme.theme" />
+            <tag name="assetic.templating.twig" />
+            <tag name="assetic.formula_resource" loader="twig" />
+        </service>
+    </services>
+</container>

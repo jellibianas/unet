@@ -1,0 +1,31 @@
+imports:
+    - { resource: config.yml }
+    - { resource: security.yml }
+
+doctrine:
+    orm:
+        entity_managers:
+            default:
+                metadata_cache_driver: apcu
+                query_cache_driver: apcu
+                result_cache_driver: apcu
+
+monolog:
+    handlers:
+        main:
+            type: fingers_crossed
+            action_level: error
+            handler: nested
+        nested:
+            type: stream
+            path: '%kernel.logs_dir%/%kernel.environment%.log'
+            level: debug
+        console:
+            type: console
+            process_psr_3_messages: false
+
+doctrine_cache:
+    providers:
+        symedit_theme:
+            type: apcu
+            namespace: symedit_theme

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <title>{% block title %}{{ symedit_seo_title() }}{% endblock %}</title>
+{% block meta %}
+{% for meta in symedit_seo_metas() %}
+        {{ meta|raw }}
+{% endfor %}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+{% set favicon = sylius_settings('company')['favicon'] %}
+{% if favicon %}
+        <link rel="icon" href="{{ favicon.webPath }}" />
+{% endif %}
+{{ (sylius_settings('seo')['head_extra']|default(''))|raw }}
+{% endblock %}
+{% block stylesheets %}
+{% stylesheets
+               '@theme_css'
+               '@SymEditBundle/Resources/less/system.less'
+               filter='cssrewrite' %}
+        <link rel="stylesheet" type="text/css" href="{{ asset(asset_url, 'stylizer') }}" />
+{% endstylesheets -%}
+{% endblock %}
+        <!--[if lt IE 9]>
+            <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+    </head>
+    {% block body_tag %}<body itemscope itemtype="http://schema.org/WebPage">{% endblock %}
+        {% block skip_link %}<a href="#content" class="sr-only">Skip to content</a>{% endblock %}
+        <div id="wrap">
+        {% block body %}
+            {% block nav %}
+                {% embed '@MopaBootstrap/Navbar/navbar.html.twig' %}
+                    {% block brand %}
+                        {% set logo = sylius_settings('company')['logo'] %}
+                        {% if logo %}
+                            <a href="{{ path('homepage') }}" class="navbar-brand">
+                                <img class="img-reponsive" src="{{ logo.webPath }}" />
+                            </a>
+                        {% endif %}
+                    {% endblock %}
+                    {% block menu %}
+                        {% include '@SymEdit/Menu/include.html.twig' %}
+                    {% endblock %}
+                {% endembed %}
+            {% endblock %}
+
+            {% block content_container %}
+            <div class="container">
+                {% block breadcrumbs %}
+                <div class="pull-right hidden-sm hidden-xs">
+                    {% include '@SymEdit/CMS/breadcrumbs.html.twig' %}
+                </div>
+                {% endblock %}
+
+                {% block heading %}<h1>{{ Page.tagline|default(Page.title) }}</h1>{% endblock %}
+                <div id="content">
+                    {% block featured %}
+                        {{ symedit_widget_area_render('featured') }}
+                    {% endblock %}
+
+                    {% block content %}
+                    {{ Page.content|shortcode|raw }}
+                    {% endblock %}
+
+                    {% block supplemental %}
+                        {{ symedit_widget_area_render('supplemental') }}
+                    {% endblock %}
+                </div>
+            </div>
+            {% endblock %}
+        {% endblock %}
+            <div id="push"></div>
+        </div>
+
+        {% block footer %}
+        <footer id="footer">
+            <div class="container">
+                {{ symedit_widget_area_render('footer') }}
+            </div>
+        </footer>
+        {% endblock %}
+
+        {% block scripts %}
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        {% include '@SymEdit/Widget/google-analytics.html.twig' %}
+        {% endblock %}
+
+        {{ json_ld_dump_all() }}
+
+        {{ (sylius_settings('seo')['body_extra']|default(''))|raw }}
+    </body>
+</html>

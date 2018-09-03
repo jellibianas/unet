@@ -1,0 +1,14 @@
+{
+    "name": "symedit/media-bundle",
+    "description": "Symfony2 Bundle for SymEdit for dealing with media",
+    "type": "symfony-bundle",
+    "authors": [
+        {
+            "name": "Craig Blanchette",
+            "email": "craig.blanchette@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "SymEdit\\Bundle\\MediaBundle\\": "" }
+    }
+}

@@ -1,0 +1,22 @@
+symedit:
+    form:
+        image:
+            actions:
+                back: Image List
+                save: Save Image
+                delete: Delete Image
+                new: Upload New Image
+                create: Upload Image
+        file:
+            actions:
+                save: Save File
+                delete: Delete File
+                view: View File
+                new: Upload New File
+                create: Upload File
+            name:
+                label: Name
+                help: Letters, numbers, underscores, and hyphens
+            file:
+                label: File
+                help: ''

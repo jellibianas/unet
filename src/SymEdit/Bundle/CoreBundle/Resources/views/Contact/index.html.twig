@@ -1,0 +1,93 @@
+{% extends '@SymEdit/Page/base.html.twig' %}
+
+{% block body_tag %}
+<body itemscope itemtype="http://schema.org/ContactPage">
+{% endblock %}
+
+{% block content_container %}
+<div id="content">
+    <div class="container">
+        {{ block('breadcrumbs') }}
+        {{ block('heading') }}
+
+        <div>
+            {{ Page.content|shortcode|raw }}
+        </div>
+    </div>
+
+    {{ block('featured') }}
+
+    <div class="container">
+    {% block content %}
+        {% set type = sylius_settings('seo')['business_type'] %}
+        <div class="row">
+            <div class="col-md-6" itemscope itemtype="http://schema.org/{{ type }}">
+                <h4>Our Contact Details</h4>
+                {% set company = sylius_settings('company') %}
+                <address>
+                    <p>
+                        <strong>{{ company.name }}</strong> <br>
+                        <span itemprop="address">{{ company.address|nl2br }}</span>
+                    </p>
+
+                    <p>
+                        {% if company.phone is not empty %}
+                        <span class="circle-icon">
+                            {{ icon('phone') }}
+                        </span>
+                        <span itemprop="telephone">{{ company.phone }}</span> <br>
+                        {% endif %}
+
+                        {% if company.fax is not empty %}
+                        <span class="circle-icon">
+                            {{ icon('book') }}
+                        </span>
+                        <span itemprop="faxNumber">{{ company.fax }}</span> <br>
+                        {% endif %}
+
+                        {% if company.email is not empty %}
+                        <span class="circle-icon">
+                            {{ icon('envelope') }}
+                        </span>
+                        <a itemprop="email" href="mailto:{{ company.email }}">{{ company.email }}</a>
+                        {% endif %}
+                    </p>
+                </address>
+            </div>
+
+            <div class="col-md-6">
+                <h4>Send us a message</h4>
+
+                {{ form_errors(form) }}
+
+                {{ form_start(form) }}
+                    <div class="row">
+                        <div class="col-md-4">
+                            {{ form_row(form.name) }}
+                        </div>
+
+                        <div class="col-md-4">
+                            {{ form_row(form.email) }}
+                        </div>
+
+                        <div class="col-md-4">
+                            {{ form_row(form.phone) }}
+                        </div>
+                    </div>
+
+                    {{ form_row(form.message) }}
+
+                    {{ form_rest(form) }}
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-default">Send Message</button>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    {% endblock %}
+
+    {{ block('supplemental') }}
+    </div>
+</div>
+{% endblock %}

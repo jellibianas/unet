@@ -1,0 +1,86 @@
+admin:
+    resource:
+        confirm_delete: Are you sure you wish to delete this resource?
+
+symedit:
+    form:
+        # Pages
+        page:
+            title: Title
+            name:
+                label: Slug
+                popover:
+                    title: Page Name
+                    content: >
+                      The Page's "Slug" attribute determines the URL of the page.
+                      If the page has any parents, it will use them as well. Eg.
+                      Root > about-us > team becomes /about-us/team
+            tagline: Page Heading
+            template: Template
+            parent: Parent
+            summary: Summary
+            pagecontroller: Page Controller?
+            pagecontrollerpath:
+                label: Controller Path
+                help: >
+                  When a controller with the path you specify is called, it will
+                  inject this Page. Use the PageController Annotation to link them.
+            display:
+                label: Display
+                help: Show this Page in Navigation
+            image: Featured Image
+            crawl:
+                label: Crawl
+                help: Show this Page on sitemap.xml?
+            tabs:
+                basic: Basic
+                template: Template
+                seo: SEO
+                summary: Summary
+                content: Content
+                advanced: Advanced
+            actions:
+                save: Save Page
+                delete: Delete Page
+                view: View Page
+                back: Back to Page
+        post:
+            image: Featured Image
+    settings:
+        tabs:
+            advanced: Advanced
+            company: Company
+            social: Social
+            seo: SEO
+            webmaster: Webmaster
+        advanced:
+            caching: Caching
+            ttl: TTL
+            widget_max_age:
+                label: Widget Cache
+                help: Widgets will only update every this amount of seconds.
+        company:
+            logo: Logo
+            favicon: Favicon
+            name: Company Name
+            address: Address
+            email: Contact Email
+            phone: Phone
+            fax: Fax
+        seo:
+            head_extra: Extra <head> contents
+            body_extra: Extra <body> contents
+            business_type: Business Type
+        webmaster:
+            google_analytics_enabled: Enable Google Analytics?
+            google_analytics: Google Analytics Code
+            google_verify: Webmaster Tools Verify
+            bing_verify: Bing Verify
+            robots: Allow Robots?
+    security:
+        logout: Logout
+        change_password: Change Password
+        profile: My Profile
+    history:
+        view: View History
+        revert: Revert

@@ -1,0 +1,19 @@
+team:
+    path: /
+    defaults:
+        _controller: symedit.controller.admin_profile:indexAction
+        _sylius:
+            template: "@SymEdit/Team/index.html.twig"
+            criteria:
+                display: true
+            sorting:
+                lastName: asc
+
+team_view_slug:
+    path: /{slug}
+    defaults:
+        _controller: symedit.controller.admin_profile:showAction
+        _sylius:
+            template: "@SymEdit/Team/view.html.twig"
+            criteria:
+                display: true

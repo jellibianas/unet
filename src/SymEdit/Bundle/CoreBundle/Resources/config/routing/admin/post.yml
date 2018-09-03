@@ -1,0 +1,61 @@
+admin_post:
+    path: /
+    methods: [GET]
+    defaults:
+        _controller: symedit.controller.post:indexAction
+        _sylius:
+            repository:
+                method: getCreatedAtPaginator
+            template: "@SymEdit/Admin/Post/index.html.twig"
+            paginate: 10
+            sortable: true
+            sorting:
+                createdAt: desc
+
+admin_post_create:
+    path: /new
+    methods: [GET, POST]
+    defaults:
+        _controller: symedit.controller.post:createAction
+        _sylius:
+            template: "@SymEdit/Admin/Post/new.html.twig"
+            factory:
+                method: createWithUser
+            redirect:
+                route: admin_post_update
+                parameters: { id: resource.id }
+
+admin_post_update:
+    path: /{id}/edit
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: symedit.controller.post:updateAction
+        _sylius:
+            template: "@SymEdit/Admin/Post/edit.html.twig"
+            redirect:
+                route: admin_post_update
+                parameters: { id: $id }
+
+admin_post_delete:
+    path: /{id}/delete
+    methods: [DELETE]
+    defaults:
+        _controller: symedit.controller.post:deleteAction
+        _sylius:
+            redirect: admin_post
+
+admin_post_history:
+    path: /{id}/history
+    methods: [GET]
+    defaults:
+        _controller: symedit.controller.post:historyAction
+        _sylius:
+            template: "@SymEdit/Admin/Post/history.html.twig"
+
+admin_post_revert:
+    path: /{id}/revert/{version}
+    methods: [PATCH]
+    defaults:
+        _controller: symedit.controller.post:revertAction
+        _sylius:
+            redirect: admin_post_update

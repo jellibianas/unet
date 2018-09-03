@@ -1,0 +1,56 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <!-- Media Form -->
+        <service id="symedit_media.form.type.media" class="SymEdit\Bundle\MediaBundle\Form\Type\MediaType">
+            <tag name="form.type" alias="symedit_media" />
+        </service>
+
+        <!-- Image Form -->
+        <service id="symedit_media.form.type.image" class="SymEdit\Bundle\MediaBundle\Form\Type\ImageType">
+            <argument>%symedit.model.image.class%</argument>
+            <tag name="form.type" alias="symedit_image" />
+        </service>
+
+        <!-- File Form -->
+        <service id="symedit_media.form.type.file" class="SymEdit\Bundle\MediaBundle\Form\Type\FileType">
+            <argument>%symedit.model.file.class%</argument>
+            <tag name="form.type" alias="symedit_file" />
+        </service>
+
+        <!-- File Choose -->
+        <service id="symedit_media.form.type.file_choose" class="SymEdit\Bundle\MediaBundle\Form\Type\FileChooseType">
+            <argument>%symedit.model.file.class%</argument>
+            <tag name="form.type" alias="symedit_file_choose" />
+        </service>
+
+        <!-- Image Gallery Form -->
+        <service id="symedit_media.form.type.image_gallery" class="SymEdit\Bundle\MediaBundle\Form\Type\ImageGalleryType">
+            <argument>%symedit.model.image_gallery.class%</argument>
+            <tag name="form.type" alias="symedit_image_gallery" />
+        </service>
+
+        <!-- Gallery Item Form -->
+        <service id="symedit_media.form.type.gallery_item" class="SymEdit\Bundle\MediaBundle\Form\Type\GaleryItemType">
+            <argument>%symedit.model.gallery_item.class%</argument>
+            <tag name="form.type" alias="symedit_gallery_item" />
+        </service>
+
+        <!-- Image Gallery Choose Form -->
+        <service id="symedit_media.form.type.image_gallery_choose" class="SymEdit\Bundle\MediaBundle\Form\Type\ImageGalleryChooseType">
+            <argument type="service" id="symedit.repository.image" />
+            <argument type="service" id="symedit.factory.gallery_item" />
+            <tag name="form.type" alias="symedit_image_gallery_choose" />
+        </service>
+
+        <!-- Image Choose -->
+        <service id="symedit_media.form.type.image_choose" class="SymEdit\Bundle\MediaBundle\Form\Type\ImageChooseType">
+            <argument>%symedit.model.image.class%</argument>
+            <tag name="form.type" alias="symedit_image_choose" />
+        </service>
+    </services>
+</container>

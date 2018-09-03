@@ -1,0 +1,99 @@
+admin_image_gallery:
+    path: /
+    methods: [GET]
+    defaults:
+        _controller: symedit.controller.image_gallery:indexAction
+        _sylius:
+            template: "@SymEdit/Admin/ImageGallery/index.html.twig"
+            paginate: false
+            limit: false
+
+admin_image_gallery_create:
+    path: /new
+    methods: [GET, POST]
+    defaults:
+        _controller: symedit.controller.image_gallery:createAction
+        _sylius:
+            template: "@SymEdit/Admin/ImageGallery/new.html.twig"
+            redirect:
+                route: admin_image_gallery
+                parameters: { id: $id }
+
+admin_image_gallery_add:
+    path: /{id}/add
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: symedit.controller.image_gallery:updateAction
+        _sylius:
+            template: "@SymEdit/Admin/ImageGallery/add.html.twig"
+            form:
+                type: symedit_image_gallery
+                options:
+                    attr:
+                        class: checkbox-multi-select
+            redirect:
+                route: admin_image_gallery_update
+                parameters: { id: $id }
+
+admin_image_gallery_update:
+    path: /{id}/edit
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: symedit.controller.image_gallery:updateAction
+        _sylius:
+            template: "@SymEdit/Admin/ImageGallery/edit.html.twig"
+            redirect:
+                route: admin_image_gallery_update
+                parameters: { id: $id }
+
+admin_image_gallery_delete:
+    path: /{id}/delete
+    methods: [DELETE]
+    defaults:
+        _controller: symedit.controller.image_gallery:deleteAction
+        _sylius:
+            redirect: admin_image_gallery
+
+# Gallery Item Routes
+admin_gallery_item_create:
+    path: /{gallery_id}/item/new
+    methods: [GET, POST]
+    defaults:
+        _controller: symedit.controller.gallery_item:createAction
+        _sylius:
+            factory:
+                method: createWithGallery
+                arguments: [$gallery_id]
+            template: "@SymEdit/Admin/ImageGallery/Item/new.html.twig"
+            redirect:
+                route: admin_image_gallery_update
+                parameters: { id: $gallery_id }
+
+admin_gallery_item_update:
+    path: /item/{id}/edit
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: symedit.controller.gallery_item:updateAction
+        _sylius:
+            template: "@SymEdit/Admin/ImageGallery/Item/edit.html.twig"
+            redirect:
+                route: admin_gallery_item_update
+                parameters: { id: $id }
+
+admin_gallery_item_delete:
+    path: /item/{id}/delete
+    methods: [DELETE]
+    defaults:
+        _controller: symedit.controller.gallery_item:deleteAction
+        _sylius:
+            redirect: admin_image_gallery
+
+admin_gallery_item_reorder:
+    path: /reorder
+    methods: [POST]
+    defaults:
+        _controller: symedit.controller.gallery_item:reorderAction
+        _sylius:
+            sortable_position: position
+            criteria:
+                id: $id

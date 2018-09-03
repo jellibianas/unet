@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <!-- Company -->
+        <service id="symedit.settings_schema.company" class="SymEdit\Bundle\CoreBundle\Settings\CompanySettingsSchema">
+            <argument type="service" id="symedit.repository.image" />
+            <argument type="service" id="symedit.repository.file" />
+
+            <tag name="symedit.settings_schema" alias="company" />
+        </service>
+
+        <!-- Social -->
+        <service id="symedit.settings_schema.social" class="SymEdit\Bundle\CoreBundle\Settings\SocialSettingsSchema">
+            <tag name="symedit.settings_schema" alias="social" />
+        </service>
+
+        <!-- Webmaster -->
+        <service id="symedit.settings_schema.webmaster" class="SymEdit\Bundle\CoreBundle\Settings\WebmasterSettingsSchema">
+            <tag name="symedit.settings_schema" alias="webmaster" />
+        </service>
+
+        <!-- Advanced -->
+        <service id="symedit.settings_schema.advanced" class="SymEdit\Bundle\CoreBundle\Settings\AdvancedSettingsSchema">
+            <tag name="symedit.settings_schema" alias="advanced" />
+        </service>
+
+        <!-- SEO -->
+        <service id="symedit.settings_schema.seo" class="SymEdit\Bundle\CoreBundle\Settings\SeoSettingsSchema">
+            <tag name="symedit.settings_schema" alias="seo" />
+        </service>
+    </services>
+
+</container>

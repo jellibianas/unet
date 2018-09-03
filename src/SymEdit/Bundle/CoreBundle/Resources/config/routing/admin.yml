@@ -1,0 +1,57 @@
+symedit_admin_page_controller:
+    resource: "@SymEditBundle/Resources/config/routing/admin/page.yml"
+    prefix: /page
+
+symedit_admin_post_controller:
+    resource: "@SymEditBundle/Resources/config/routing/admin/post.yml"
+    prefix: /post
+
+symedit_admin_events_controller:
+    resource: "@SymEditBundle/Resources/config/routing/admin/events.yml"
+    prefix: /events
+
+symedit_admin_image_controller:
+    resource: "@SymEditBundle/Resources/config/routing/admin/image.yml"
+    prefix: /image
+
+symedit_admin_file_controller:
+    resource: "@SymEditBundle/Resources/config/routing/admin/file.yml"
+    prefix: /file
+
+symedit_admin_image_gallery_controller:
+    resource: "@SymEditBundle/Resources/config/routing/admin/image_gallery.yml"
+    prefix: /image/gallery
+
+symedit_admin_category_controller:
+    resource: "@SymEditBundle/Resources/config/routing/admin/category.yml"
+    prefix: /category
+
+symedit_admin_settings_controller:
+    resource: "@SymEditBundle/Resources/config/routing/admin/settings.yml"
+    prefix: /settings
+
+symedit_admin_user_controller:
+    resource: "@SymEditBundle/Resources/config/routing/admin/user.yml"
+    prefix: /user
+
+symedit_admin_widget_controller:
+    resource: "@SymEditBundle/Resources/config/routing/admin/widget.yml"
+    prefix: /widget
+
+symedit_admin_form_builder_controller:
+    resource: "@SymEditBundle/Resources/config/routing/admin/form_builder.yml"
+    prefix: /form-builder
+
+symedit_admin_cache_controller:
+    resource: "@SymEditBundle/Resources/config/routing/admin/cache.yml"
+    prefix: /cache
+
+# Below not converted
+
+symedit_admin_dashboard_controller:
+    resource: "@SymEditBundle/Controller/DashboardController.php"
+    type: annotation
+
+symedit_admin_stylizer_controller:
+    resource: "@SymEditBundle/Controller/StylizerController.php"
+    type: annotation

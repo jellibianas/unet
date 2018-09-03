@@ -1,0 +1,17 @@
+{#
+    Have to check defined, can't use default as a blank array
+    will default it to the company when you'd rather have nothing
+#}
+{%- if social is not defined %}
+    {% set social = sylius_settings('social').parameters %}
+{% endif -%}
+
+{%- if name is not defined %}
+    {% set name = sylius_settings('company')['name'] %}
+{% endif -%}
+
+{% for key, value in social if value is not empty %}
+    <a href="{{ value }}" target="_blank">
+        <img src="{{ asset('bundles/symedit/img/social/' ~ key ~ '.png') }}" alt="{{ name }} on {{ key|capitalize }}">
+    </a>
+{% endfor %}

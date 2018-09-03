@@ -1,0 +1,33 @@
+symedit_api_event:
+    path: /
+    methods: [GET]
+    defaults:
+        _controller: symedit.controller.event:indexAction
+        _sylius:
+            paginate: $limit
+            sorting:
+                eventStart: desc
+
+symedit_api_event_create:
+    path: /
+    methods: [POST]
+    defaults:
+        _controller: symedit.controller.event:createAction
+
+symedit_api_event_show:
+    path: /{id}
+    methods: [GET]
+    defaults:
+        _controller: symedit.controller.event:showAction
+
+symedit_api_event_update:
+    path: /{id}
+    methods: [PUT, PATCH]
+    defaults:
+        _controller: symedit.controller.event:updateAction
+
+symedit_api_event_delete:
+    path: /{id}
+    methods: [DELETE]
+    defaults:
+        _controller: symedit.controller.event:deleteAction

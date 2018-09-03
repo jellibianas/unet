@@ -1,0 +1,14 @@
+{
+    "name": "symedit/stylizer-bundle",
+    "description": "Dynamic Variables / Dumping for Assetic",
+    "type": "symfony-bundle",
+    "authors": [
+        {
+            "name": "Craig Blanchette",
+            "email": "craig.blanchette@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "SymEdit\\Bundle\\StylizerBundle\\": "" }
+    }
+}

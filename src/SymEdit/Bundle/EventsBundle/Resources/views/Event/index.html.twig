@@ -1,0 +1,37 @@
+{% extends '@SymEdit/Page/base.html.twig' %}
+
+{% block content %}
+    {{ parent() }}
+
+    <div class="events-list">
+        {% for event in events %}
+            <div class="event clearfix">
+                <h3>
+                    <a href="{{ path('symedit_event_show', { slug: event.slug }) }}">
+                        {{ event.title }}
+                    </a>
+
+                    <small>
+                        {{ event.eventStart|date('F jS, Y') }}
+                    </small>
+                </h3>
+
+                {% if event.address is not empty %}
+                <p>
+                    {{ event.address }}
+                </p>
+                {% endif %}
+
+                <div>
+                    <a class="btn btn-primary btn-sm" href="{{ path('symedit_event_show', { slug: event.slug }) }}">
+                        View Event
+                    </a>
+                </div>
+            </div>
+        {% else %}
+            <p>
+                There are currently no upcoming events.
+            </p>
+        {% endfor %}
+    </div>
+{% endblock %}

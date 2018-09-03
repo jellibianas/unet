@@ -1,0 +1,14 @@
+{% if not Page.homepage and Page.id is not null %}
+<ul class="breadcrumb" itemprop="breadcrumb">
+    {% for crumb in symedit_breadcrumbs_get() %}
+        {% if loop.first %}
+        <li>
+            <a href="{{ path('homepage') }}">Home</a>
+        </li>
+        {% endif %}
+        <li{% if loop.last %} class="active"{% endif %}>
+            <a href="{{ path(crumb.path, crumb.params) }}">{{ crumb.title }}</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endif %}

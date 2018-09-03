@@ -1,0 +1,83 @@
+# @TODO: Maybe move this to the BlogBundle? It could be included
+# with a prefix or use the page controller. Doesn't need to be here
+
+blog:
+    path: /
+    defaults:
+        _controller: symedit.controller.post:indexAction
+        _format: html
+        _sylius:
+            paginate: "expr:setting('blog.max_posts', 5)"
+            template: "@SymEdit/Blog/index.html.twig"
+            repository:
+                method: getPublishedPaginator
+
+blog_rss:
+    path: /feed.xml
+    defaults:
+        _controller: symedit.controller.post:rssAction
+        _format: rss
+        _sylius:
+            template: "@SymEdit/Blog/feed.xml.twig"
+            paginate: false
+
+blog_archive:
+    path: /archive
+    requirements:
+        page: \d+
+    defaults:
+        _sylius:
+            paginate: "expr:setting('blog.max_posts', 5)"
+            template: "@SymEdit/Blog/index.html.twig"
+            criteria:
+                status: 1
+        _controller: symedit.controller.post:indexAction
+        _format: html
+        _seo:
+            index: false
+        page: 1
+
+blog_preview:
+    path: /preview/{slug}
+    defaults:
+        _sylius:
+            template: "@SymEdit/Blog/single.html.twig"
+            criteria:
+                slug: $slug
+        _controller: symedit.controller.post:previewAction
+
+blog_slug_view:
+    path: /{slug}
+    requirements:
+        slug: "[a-z0-9_-]+"
+    defaults:
+        _controller: symedit.controller.post:showPublishedAction
+        _sylius:
+            template: "@SymEdit/Blog/single.html.twig"
+            cache:
+                last_modified: resource.updatedAt
+                public: true
+
+blog_category_view:
+    path: /category/{slug}/{page}
+    requirements:
+        page: \d+
+        slug: "[a-z0-9_\\-\\/]+?"
+    defaults:
+        _controller: symedit.controller.post:showCategoryAction
+        _format: html
+        _sylius:
+            paginate: "expr:setting('blog.max_posts', 5)"
+            template: "@SymEdit/Blog/category.html.twig"
+        page: 1
+
+blog_category_rss:
+    path: /category/{slug}/feed.xml
+    requirements:
+        slug: "[a-z0-9_\\-\\/]+?"
+    defaults:
+        _controller: symedit.controller.post:showCategoryAction
+        _format: rss
+        _sylius:
+            template: "@SymEdit/Blog/feed.xml.twig"
+        page: 1

@@ -1,0 +1,115 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="symedit_stylizer.assetic.command.class">SymEdit\Bundle\StylizerBundle\Command\DumpCommand</parameter>
+        <parameter key="symedit_stylizer.dumper.class">SymEdit\Bundle\StylizerBundle\Dumper\Dumper</parameter>
+        <parameter key="symedit_stylizer.injector.class">SymEdit\Bundle\StylizerBundle\Injector\Injector</parameter>
+        <parameter key="symedit_stylizer.injector.lessphp.class">SymEdit\Bundle\StylizerBundle\Injector\LessPhpInjector</parameter>
+        <parameter key="symedit_stylizer.injector.less.class">SymEdit\Bundle\StylizerBundle\Injector\LessInjector</parameter>
+        <parameter key="symedit_stylizer.loader.chain.class">SymEdit\Bundle\StylizerBundle\Loader\LoaderChain</parameter>
+        <parameter key="symedit_stylizer.loader.yaml.class">SymEdit\Bundle\StylizerBundle\Loader\YamlLoader</parameter>
+        <parameter key="symedit_stylizer.form.styles.class">SymEdit\Bundle\StylizerBundle\Form\Type\StylesType</parameter>
+        <parameter key="symedit_stylizer.form.color.class">SymEdit\Bundle\StylizerBundle\Form\Type\ColorType</parameter>
+        <parameter key="symedit_stylizer.form.google_font.class">SymEdit\Bundle\StylizerBundle\Form\Type\GoogleFontType</parameter>
+        <parameter key="symedit_stylizer.style_manager.class">SymEdit\Bundle\StylizerBundle\Model\StyleManager</parameter>
+        <parameter key="symedit_stylizer.storage.yaml.class">SymEdit\Bundle\StylizerBundle\Storage\YamlStorage</parameter>
+        <parameter key="symedit_stylizer.dumper.version_manage.class">SymEdit\Bundle\StylizerBundle\Dumper\VersionManager</parameter>
+    </parameters>
+
+
+    <services>
+        <!-- Override Assetic Command -->
+        <service id="symedit_stylizer.assetic.command" class="%symedit_stylizer.assetic.command.class%">
+            <call method="setContainer"><argument type="service" id="service_container" /></call>
+        </service>
+
+        <!-- Loader Chain -->
+        <service id="symedit_stylizer.loader.chain" class="%symedit_stylizer.loader.chain.class%" public="false">
+            <argument type="collection" />
+        </service>
+
+        <!-- Yaml Loader -->
+        <service id="symedit_stylizer.loader.yaml" class="%symedit_stylizer.loader.yaml.class%" public="false">
+            <argument>%symedit_stylizer.loader.files.yaml%</argument>
+            <tag name="stylizer.loader" />
+        </service>
+
+        <!-- Dumper -->
+        <service id="symedit_stylizer.dumper" class="%symedit_stylizer.dumper.class%">
+            <argument type="service" id="symedit_stylizer.assetic.command" />
+            <argument type="service" id="symedit_stylizer.version_manager" />
+        </service>
+
+        <!-- Chain Injector -->
+        <service id="symedit_stylizer.injector" class="%symedit_stylizer.injector.class%">
+            <argument type="service" id="assetic.filter_manager" />
+            <argument type="collection" />
+        </service>
+
+        <!-- Lessphp injector -->
+        <service id="symedit_stylizer.injector.lessphp" class="%symedit_stylizer.injector.lessphp.class%">
+            <tag name="stylizer.injector" />
+        </service>
+
+        <!-- Less injector -->
+        <service id="symedit_stylizer.injector.less" class="%symedit_stylizer.injector.less.class%">
+            <tag name="stylizer.injector" />
+        </service>
+
+        <!-- Styles Model -->
+        <service id="symedit_stylizer.styles" class="SymEdit\Bundle\StylizerBundle\Model\Styles">
+            <factory service="symedit_stylizer.style_manager" method="getStyles" />
+        </service>
+
+        <!-- Stylizer Form Type -->
+        <service id="symedit_stylizer.form.styles" class="%symedit_stylizer.form.styles.class%">
+            <argument type="service" id="symedit_stylizer.style_manager" />
+            <argument>%symedit_stylizer.form_mappings%</argument>
+
+            <tag name="form.type" />
+        </service>
+
+        <!-- Style Manager -->
+        <service id="symedit_stylizer.style_manager" class="%symedit_stylizer.style_manager.class%">
+            <argument type="service" id="symedit_stylizer.loader.chain" />
+            <argument type="service" id="symedit_stylizer.storage" />
+            <argument>%kernel.cache_dir%/symedit_stylizer</argument>
+            <argument>%kernel.debug%</argument>
+        </service>
+
+        <!-- Color Form Type -->
+        <service id="symedit_stylizer.form.color" class="%symedit_stylizer.form.color.class%">
+            <tag name="form.type" alias="color" />
+        </service>
+
+        <!-- Google Font Form Type -->
+        <service id="symedit_stylizer.form.google_font" class="%symedit_stylizer.form.google_font.class%">
+            <tag name="form.type" alias="google_font" />
+        </service>
+
+        <!-- Twig Extension -->
+        <service id="symedit_stylizer.twig.stylizer_extension" class="SymEdit\Bundle\StylizerBundle\Twig\Extension\StylizerExtension">
+            <argument type="service" id="service_container" />
+            <tag name="twig.extension" />
+        </service>
+
+        <!-- Yaml Storage -->
+        <service id="symedit_stylizer.storage.yaml" class="%symedit_stylizer.storage.yaml.class%">
+            <argument>%kernel.root_dir%/config/styles.yml</argument>
+        </service>
+
+        <!-- Version Manager -->
+        <service id="symedit_stylizer.version_manager" class="%symedit_stylizer.dumper.version_manage.class%">
+            <argument>%kernel.cache_dir%/symedit_stylizer</argument>
+        </service>
+
+        <!-- Version Strategy -->
+        <service id="symedit_stylizer.asset_version_strategy" class="SymEdit\Bundle\StylizerBundle\VersionStrategy\StylizerVersionStrategy">
+            <argument type="service" id="symedit_stylizer.version_manager" />
+        </service>
+    </services>
+</container>

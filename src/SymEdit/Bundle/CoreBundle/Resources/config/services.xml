@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="symedit.assetic.config_loader.class">Symfony\Bundle\AsseticBundle\Factory\Loader\ConfigurationLoader</parameter>
+        <parameter key="symedit.assetic.config_resource.class">Symfony\Bundle\AsseticBundle\Factory\Resource\ConfigurationResource</parameter>
+        <parameter key="symedit.expression_language.class">SymEdit\Bundle\CoreBundle\ExpressionLanguage\ExpressionLanguage</parameter>
+        <parameter key="symedit.expression_language.settings_provider.class">SymEdit\Bundle\CoreBundle\ExpressionLanguage\Provider\SettingsExpressionLanguageProvider</parameter>
+    </parameters>
+
+    <services>
+        <!-- Breadcrumbs -->
+        <service id="symedit.breadcrumbs" class="SymEdit\Bundle\CoreBundle\Model\Breadcrumbs" />
+
+        <!-- Assetic Configuration Loader -->
+        <service id="symedit.assetic.config_loader" class="%symedit.assetic.config_loader.class%" public="false">
+            <tag name="assetic.formula_loader" alias="symedit_config" />
+        </service>
+
+        <!-- Assetic Configuration Resource -->
+        <service id="symedit.assetic.config_resource" class="%symedit.assetic.config_resource.class%" public="false">
+            <tag name="assetic.formula_resource" loader="symedit_config" />
+            <argument type="collection" /> <!-- configured formulae -->
+        </service>
+
+        <!-- Synthetic Current Page -->
+        <service id="symedit_page" class="%symedit.model.page.class%" synthetic="true" />
+
+        <!-- Expression Language -->
+        <service id="symedit.expression_language" class="%symedit.expression_language.class%" />
+
+        <!-- Expression Language Provider -->
+        <service
+            id="symedit.expression_language.settings_provider"
+            class="%symedit.expression_language.settings_provider.class%"
+            public="false">
+            <tag name="symedit.expression_language_provider" />
+        </service>
+    </services>
+
+</container>

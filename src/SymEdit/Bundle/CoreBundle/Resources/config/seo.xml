@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="symedit.seo.page.class">SymEdit\Bundle\CoreBundle\EventListener\Seo\PageCalculator</parameter>
+        <parameter key="symedit.seo.post.class">SymEdit\Bundle\CoreBundle\EventListener\Seo\PostCalculator</parameter>
+        <parameter key="symedit.seo.category.class">SymEdit\Bundle\CoreBundle\EventListener\Seo\CategoryCalculator</parameter>
+        <parameter key="symedit.seo.opengraph.class">SymEdit\Bundle\CoreBundle\EventListener\Seo\OpenGraphCalculator</parameter>
+    </parameters>
+
+    <services>
+        <service id="symedit.seo.post" class="%symedit.seo.post.class%">
+            <tag name="seo.calculator" />
+        </service>
+
+        <service id="symedit.seo.opengraph" class="%symedit.seo.opengraph.class%">
+            <argument type="service" id="symedit.settings_manager" />
+            <tag name="seo.calculator" />
+        </service>
+    </services>
+</container>

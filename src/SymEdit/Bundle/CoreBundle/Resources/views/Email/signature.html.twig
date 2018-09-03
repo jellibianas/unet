@@ -1,0 +1,8 @@
+  <address>
+      {% set company = sylius_settings('company') %}
+      <strong>{{ company.name }}</strong>
+      {% set info = ['phone', 'email', 'address'] %}
+      {% for piece in info if company[piece] is not empty %}
+      <br> {{ company[piece] }}
+      {% endfor %}
+  </address>

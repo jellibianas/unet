@@ -1,0 +1,14 @@
+{
+    "name": "symedit/widget-bundle",
+    "description": "Provides re-usable widgets in templating",
+    "type": "symfony-bundle",
+    "authors": [
+        {
+            "name": "Craig Blanchette",
+            "email": "craig.blanchette@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "SymEdit\\Bundle\\WidgetBundle\\": "" }
+    }
+}

@@ -1,0 +1,4 @@
+name: default
+parent: parent
+title: Default Test Theme
+description: Basic theme with no overrides for testing

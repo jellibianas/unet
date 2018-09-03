@@ -1,0 +1,45 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="symedit_widget.matcher.class">SymEdit\Bundle\WidgetBundle\Matcher\Matcher</parameter>
+        <parameter key="symedit_widget.voter.include_all.class">SymEdit\Bundle\WidgetBundle\Matcher\Voter\IncludeAllVoter</parameter>
+        <parameter key="symedit_widget.voter.uri.class">SymEdit\Bundle\WidgetBundle\Matcher\Voter\UriVoter</parameter>
+        <parameter key="symedit_widget.renderer.widget.class">SymEdit\Bundle\WidgetBundle\Renderer\WidgetRenderer</parameter>
+        <parameter key="symedit_widget.renderer.area.class">SymEdit\Bundle\WidgetBundle\Renderer\WidgetAreaRenderer</parameter>
+    </parameters>
+
+    <services>
+        <!-- Matcher -->
+        <service id="symedit_widget.matcher" class="%symedit_widget.matcher.class%">
+            <argument type="collection" />
+        </service>
+
+        <!-- Voters -->
+        <service id="symedit_widget.voter.include_all" class="%symedit_widget.voter.include_all.class%">
+            <tag name="symedit_widget.voter" priority="-128" />
+        </service>
+
+        <!-- TODO: Fix this with ESI
+        <service id="symedit_widget.voter.uri" class="%symedit_widget.voter.uri.class%">
+            <call method="setRequest">
+                <argument type="service" id="request" on-invalid="null" strict="false" />
+            </call>
+            <tag name="symedit_widget.voter" />
+        </service>
+        -->
+
+        <!-- Renderers -->
+        <service id="symedit_widget.renderer.widget" class="%symedit_widget.renderer.widget.class%">
+            <argument type="service" id="symedit_widget.widget.registry" />
+        </service>
+
+        <service id="symedit_widget.renderer.area" class="%symedit_widget.renderer.area.class%">
+            <argument type="service" id="twig" />
+            <argument type="service" id="symedit_widget.matcher" />
+        </service>
+    </services>
+</container>

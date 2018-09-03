@@ -1,0 +1,80 @@
+{# Image Widget #}
+{% block symedit_image_widget_form %}
+
+{% endblock %}
+
+{% block symedit_image_widget %}
+<div class="row">
+    <div class="col-md-6">
+        {% if form.name is defined %}
+            {{ form_row(form.name) }}
+        {% endif %}
+
+        {% if form.file is defined %}
+            {{ form_row(form.file) }}
+        {% endif %}
+
+        {% if form.remove is defined %}
+            {{ form_row(form.remove) }}
+        {% endif %}
+    </div>
+
+   {% if form.vars is defined and
+          form.vars.show_image and
+          form.vars.data is not null and
+          form.vars.data.webpath is not empty %}
+    <div class="col-md-6">
+        <h5>Current Image</h5>
+        <img class="img-thumbnail" src="{{ form.vars.data | imagine_filter('gallery') }}">
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block symedit_image_choose_widget %}
+<div class="symedit-media-choose row">
+    <div class="col-md-6">
+        <button type="button" data-toggle="symedit-media-choose" data-type="image" data-url="{{ path('admin_image_dialog') }}" class="btn btn-primary btn-sm">Choose Image</button>
+    </div>
+
+    {% if show_image %}
+        {% set hasData = data is not null and data.webpath is not empty %}
+        <div class="col-md-6 symedit-media-container {{ hasData ? 'has-data' : 'no-data' }}">
+            <h5>Current Image</h5>
+            <img class="img-thumbnail symedit-media-image"{% if hasData %} src="{{ data | imagine_filter('gallery') }}"{% endif %}>
+        </div>
+    {% endif %}
+
+    {{ block('hidden_widget') }}
+</div>
+{% endblock %}
+
+{% block symedit_file_choose_widget %}
+<div class="symedit-media-choose row">
+    <div class="col-md-6">
+        <button type="button" data-toggle="symedit-media-choose" data-type="file" data-url="{{ path('admin_file_dialog') }}" class="btn btn-primary btn-sm">Choose File</button>
+    </div>
+
+    {% set hasData = data is not null and data.webpath is not empty %}
+    <div class="col-md-6 symedit-media-container {{ hasData ? 'has-data' : 'no-data' }}">
+        <h5>Current File</h5>
+        <div class="symedit-media-file">{{ hasData ? data.webPath : '' }}</div>
+    </div>
+
+    {{ block('hidden_widget') }}
+</div>
+{% endblock %}
+
+{# Choose Image Widget #}
+{% block symedit_image_gallery_choose_row %}
+<div class="row symedit-gallery-choose">
+    {% for child in form.children %}
+        {% set index = child.vars.value %}
+        {% set image = form.vars.choices[index].data %}
+    <label>
+        {{ form_widget(child) }}
+        <img src="{{ image | imagine_filter('symedit_96x96') }}">
+    </label>
+    {% endfor %}
+</div>
+{% endblock %}

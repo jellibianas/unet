@@ -1,0 +1,25 @@
+symedit:
+    form:
+        event:
+            tab:
+                basic: Basic Information
+                seo: SEO
+                time: Time / Date
+                location: Location
+                media: Media
+            basic:
+                title: Title
+                description: Description
+                url: URL
+                email: Email
+                phone: Phone
+                price: Price
+            time:
+                start: Event Start
+                end: Event End
+            location:
+                address: Address
+                show_map: Show Map?
+            media:
+                file: Attach File
+                image: Attach Image

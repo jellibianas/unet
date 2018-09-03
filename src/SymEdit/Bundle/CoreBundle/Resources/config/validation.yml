@@ -1,0 +1,17 @@
+SymEdit\Bundle\CoreBundle\Model\Page:
+    constraints:
+        - Callback: isNameValid
+        - Callback: isParentValid
+    properties:
+        title:
+            - NotBlank:
+                message: "You must provide a Title for this Page"
+        name:
+            - Regex:
+                pattern: "/^[a-z0-9_-]+$/"
+                message: "You may only use lowercase letters, numbers, underscores or hyphens"
+
+SymEdit\Bundle\CoreBundle\Model\Post:
+    properties:
+        image:
+            - Valid: ~

@@ -1,0 +1,18 @@
+symedit_blog_controller:
+    resource: "@SymEditBundle/Resources/config/routing/frontend/blog.yml"
+
+symedit_events_controller:
+    resource: "@SymEditBundle/Resources/config/routing/frontend/events.yml"
+
+symedit_contact_controller:
+    resource: "@SymEditBundle/Resources/config/routing/frontend/contact.yml"
+
+symedit_team_controller:
+    resource: "@SymEditBundle/Resources/config/routing/frontend/team.yml"
+
+symedit_webmaster_controller:
+    resource: "@SymEditBundle/Resources/config/routing/frontend/webmaster.yml"
+
+symedit_form_builder_controller:
+    resource: "@SymEditBundle/Resources/config/routing/frontend/form_builder.yml"
+    prefix: /form-builder

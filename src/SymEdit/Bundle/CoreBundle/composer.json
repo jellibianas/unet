@@ -1,0 +1,22 @@
+{
+    "name": "symedit/core-bundle",
+    "description": "CMS For Symfony2",
+    "type": "symfony-bundle",
+    "authors": [
+        {
+            "name": "Craig Blanchette",
+            "email": "craig.blanchette@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": { "SymEdit\\Bundle\\CoreBundle": "" }
+    },
+    "target-dir": "SymEdit/Bundle/CoreBundle",
+    "require": {
+        "symedit/user-bundle": "dev-master@dev",
+        "symedit/settings-bundle": "dev-master@dev"
+    },
+    "suggest": {
+        "symedit/stylizer-bundle": "Allows you to use the stylizer to edit styles."
+    }
+}

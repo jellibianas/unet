@@ -1,0 +1,32 @@
+<div>
+    {% set company = sylius_settings('company') %}
+    <address>
+        <p>
+            <strong>{{ company.name }}</strong> <br>
+            <span>{{ company.address|nl2br }}</span>
+        </p>
+
+        <p>
+            {% if company.phone is not empty %}
+            <span class="circle-icon">
+                {{ icon('phone') }}
+            </span>
+            <span>{{ company.phone }}</span> <br>
+            {% endif %}
+
+            {% if company.fax is not empty %}
+            <span class="circle-icon">
+                {{ icon('book') }}
+            </span>
+            <span>{{ company.fax }}</span> <br>
+            {% endif %}
+
+            {% if company.email is not empty %}
+            <span class="circle-icon">
+                {{ icon('envelope') }}
+            </span>
+            <a href="mailto:{{ company.email }}">{{ company.email }}</a>
+            {% endif %}
+        </p>
+    </address>
+</div>

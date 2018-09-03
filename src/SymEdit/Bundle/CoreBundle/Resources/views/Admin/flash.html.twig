@@ -1,0 +1,36 @@
+{% macro alert(flash, iconName) %}
+    {{ icon(iconName) }}
+
+    {% if flash is iterable %}
+        {{ flash.message|trans(flash.parameters, 'flashes') }}
+    {% else %}
+        {{ flash|trans({}, 'flashes') }}
+    {% endif %}
+{% endmacro %}
+
+<div id="flash">
+    {% for url in app.session.flashbag.get('share')|default([]) %}
+        <div class="flash-message share">
+            <div class="share-text">{{ 'symedit.share'|trans({}, 'flashes') }}</div>
+            <div class="addthis_toolbox addthis_default_style" addthis:url="{{ url }}">
+                <a class="addthis_button_preferred_1"></a>
+                <a class="addthis_button_preferred_2"></a>
+                <a class="addthis_button_preferred_3"></a>
+                <a class="addthis_button_compact"></a>
+            </div>
+        </div>
+    {% endfor %}
+
+    {% for message in app.session.flashbag.get('success')|default([]) %}
+        <div class="flash-message message">
+            {{ _self.alert(message, 'thumbs-up') }}
+        </div>
+    {% endfor %}
+
+
+    {% for message in app.session.flashbag.get('error')|default([]) %}
+        <div class="flash-message error">
+            {{ _self.alert(message, 'warning-sign') }}
+        </div>
+    {% endfor %}
+</div>

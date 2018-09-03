@@ -1,0 +1,31 @@
+symedit_api_page:
+    path: /
+    methods: [GET]
+    defaults:
+        _controller: symedit.controller.page:indexAction
+        _sylius:
+            paginate: $limit
+
+symedit_api_page_create:
+    path: /
+    methods: [POST]
+    defaults:
+        _controller: symedit.controller.page:createAction
+
+symedit_api_page_show:
+    path: /{id}
+    methods: [GET]
+    defaults:
+        _controller: symedit.controller.page:showAction
+
+symedit_api_page_update:
+    path: /{id}
+    methods: [PUT, PATCH]
+    defaults:
+        _controller: symedit.controller.page:updateAction
+
+symedit_api_page_delete:
+    path: /{id}
+    methods: [DELETE]
+    defaults:
+        _controller: symedit.controller.page:deleteAction

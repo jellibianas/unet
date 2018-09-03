@@ -1,0 +1,18 @@
+{
+    "name": "symedit/user-bundle",
+    "description": "User Bundle for SymEdit",
+    "type": "symfony-bundle",
+    "authors": [
+        {
+            "name": "Craig Blanchette",
+            "email": "craig.blanchette@gmail.com"
+        }
+    ],
+    "require": {
+        "friendsofsymfony/user-bundle":     "~2.0@dev",
+        "sylius/resource-bundle":           "~0.10.0"
+    },
+    "autoload": {
+        "psr-4": { "SymEdit\\Bundle\\UserBundle\\": "" }
+    }
+}

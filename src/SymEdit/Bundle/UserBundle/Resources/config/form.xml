@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <!-- User Type -->
+        <service id="symedit.form.type.user" class="SymEdit\Bundle\UserBundle\Form\Type\UserType">
+            <argument>%fos_user.model.user.class%</argument>
+            <tag name="form.type" alias="symedit_user" />
+        </service>
+
+        <!-- Choose User Type -->
+        <service id="symedit.form.type.user_choose" class="SymEdit\Bundle\UserBundle\Form\Type\UserChooseType">
+            <argument>%symedit.model.user.class%</argument>
+            <tag name="form.type" alias="symedit_user_choose" />
+        </service>
+
+        <!-- Registration Type -->
+        <service id="symedit.form.type.registration" class="%symedit.form.type.registration.class%">
+            <argument>%fos_user.model.user.class%</argument>
+            <tag name="form.type" alias="symedit_user_registration" />
+        </service>
+
+        <!-- Admin Profile Type -->
+        <service id="symedit.form.type.admin_profile" class="SymEdit\Bundle\UserBundle\Form\Type\AdminProfileType">
+            <argument>%fos_user.model.user.class%</argument>
+            <tag name="form.type" alias="symedit_admin_profile" />
+        </service>
+
+        <!-- User Profile Type -->
+        <service id="symedit.form.type.user_profile" class="SymEdit\Bundle\UserBundle\Form\Type\ProfileType">
+            <argument>%fos_user.model.user.class%</argument>
+            <tag name="form.type" alias="symedit_user_profile" />
+        </service>
+
+        <!--  Form Context Factory -->
+        <service id="symedit_user.form.factory.context" class="SymEdit\Bundle\UserBundle\Form\Factory\ContextFormFactory">
+            <argument type="service" id="form.factory" />
+            <argument type="service" id="security.token_storage" />
+        </service>
+    </services>
+</container>

@@ -1,0 +1,76 @@
+admin_page:
+    path: /
+    methods: [GET]
+    defaults:
+        _controller: symedit.controller.page:indexAction
+        _sylius:
+            paginate: false
+            repository:
+                method: findRoot
+            template: "@SymEdit/Admin/Page/index.html.twig"
+
+admin_page_json:
+    path: /list.{_format}
+    requirements:
+        _format: json
+    defaults:
+        _format: json
+        _controller: symedit.controller.page:jsonAction
+        _sylius:
+            paginate: false
+
+admin_page_create:
+    path: /new
+    methods: [GET, POST]
+    defaults:
+        _controller: symedit.controller.page:createAction
+        _sylius:
+            template: "@SymEdit/Admin/Page/new.html.twig"
+            redirect:
+                route: admin_page_update
+                parameters: { id: resource.id }
+
+admin_page_update:
+    path: /{id}/edit
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: symedit.controller.page:updateAction
+        _sylius:
+            template: "@SymEdit/Admin/Page/edit.html.twig"
+            redirect:
+                route: admin_page_update
+                parameters: { id: $id }
+
+admin_page_delete:
+    path: /{id}/delete
+    methods: [DELETE]
+    defaults:
+        _controller: symedit.controller.page:deleteAction
+        _sylius:
+            redirect: admin_page
+
+admin_page_reorder:
+    path: /reorder
+    methods: [POST]
+    defaults:
+        _controller: symedit.controller.page:reorderAction
+        _sylius:
+            sortable_position: pageOrder
+            criteria:
+                id: $id
+
+admin_page_history:
+    path: /{id}/history
+    methods: [GET]
+    defaults:
+        _controller: symedit.controller.page:historyAction
+        _sylius:
+            template: "@SymEdit/Admin/Page/history.html.twig"
+
+admin_page_revert:
+    path: /{id}/revert/{version}
+    methods: [PATCH]
+    defaults:
+        _controller: symedit.controller.page:revertAction
+        _sylius:
+            redirect: admin_page_update

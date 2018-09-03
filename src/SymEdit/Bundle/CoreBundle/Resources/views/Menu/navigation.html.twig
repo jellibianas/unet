@@ -1,0 +1,21 @@
+{% extends 'knp_menu.html.twig' %}
+{% import _self as menu %}
+
+{% macro attributes(attributes) %}
+{% for name, value in attributes %}
+    {%- if value is not none and value is not same as(false) -%}
+        {{- ' %s="%s"'|format(name, value is same as(true) ? name|e : value|e)|raw -}}
+    {%- endif -%}
+{%- endfor -%}
+{% endmacro %}
+
+{% block linkElement %}
+{% spaceless %}
+    <a href="{{ item.uri }}"{{ menu.attributes(item.linkAttributes) }}>
+        {{- block('label') -}}
+        {%- if item.children|length > 0 -%}
+            <span class="caret"></span>
+        {% endif -%}
+    </a>
+{% endspaceless %}
+{% endblock %}

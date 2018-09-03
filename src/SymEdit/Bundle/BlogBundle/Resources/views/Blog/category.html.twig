@@ -1,0 +1,17 @@
+{% extends '@SymEdit/Blog/index.html.twig' %}
+
+{% block meta %}
+{{ parent() }}
+<link href="{{ url('blog_category_rss', {slug:category.slug}) }}" rel="alternate" type="application/rss+xml" title="{{ block('title') }}">
+{% endblock %}
+
+{% block blog_title %}
+Category &raquo; {{ category.title }}
+<a href="{{ path('blog_category_rss', {slug:category.slug}) }}">
+    <img src="{{ asset('/bundles/symedit/img/social/rss.png') }}" alt="{{ Page.tagline }} - {{ category.title }} - RSS Feed">
+</a>
+{% endblock %}
+
+{% block blog_pager %}
+    {{ pagerfanta(posts) }}
+{% endblock %}

@@ -1,0 +1,9 @@
+<div>
+    <address>
+        {% set company = sylius_settings('company') %}
+        {% if company.name is not empty %}<strong>{{ company.name }}</strong><br>{% endif %}
+        {% if company.address is not empty %}{{ company.address|nl2br }} <br>{% endif %}
+        {% if company.phone is not empty %}{{ company.phone }} <br>{% endif %}
+        {% if company.email is not empty %}<a href="mailto:{{ company.email }}">{{ company.email }}</a>{% endif %}
+    </address>
+</div>

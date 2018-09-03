@@ -1,0 +1,150 @@
+symedit:
+    driver: doctrine/orm
+    email:
+        sender: no-reply@riwebgurus.com
+
+# Blog Configuration
+symedit_blog:
+    resources:
+        post:
+            classes:
+                model: SymEdit\Bundle\CoreBundle\Model\Post
+                form: SymEdit\Bundle\CoreBundle\Form\Type\PostType
+        category:
+            classes:
+                model: SymEdit\Bundle\CoreBundle\Model\Category
+                form: SymEdit\Bundle\CoreBundle\Form\Type\CategoryType
+
+# SymEdit SEO
+symedit_seo:
+    models:
+        SymEdit\Bundle\CoreBundle\Model\PageInterface:
+            title:
+                - model.getTitle()
+            description:
+                - model.getSummary()
+                - model.getContent()
+        SymEdit\Bundle\BlogBundle\Model\PostInterface:
+            title:
+                - model.getTitle()
+            description:
+                - model.getSummary()
+                - model.getContent()
+        SymEdit\Bundle\BlogBundle\Model\CategoryInterface:
+            title:
+                - model.getTitle()
+            description:
+                - "'Blog posts in ' ~ model.getTitle()"
+        SymEdit\Bundle\EventsBundle\Model\EventInterface:
+            title:
+                - model.getTitle()
+            description:
+                - model.getDescription()
+
+# Sylius Settings
+symedit_settings:
+    driver: doctrine/orm
+    resources:
+        settings:
+            classes:
+                controller: SymEdit\Bundle\CoreBundle\Controller\SettingsController
+                repository: SymEdit\Bundle\SettingsBundle\Doctrine\ORM\SettingsRepository
+
+symedit_analytics:
+    tracker:
+        page: %symedit.model.page.class%
+        post: %symedit.model.post.class%
+        category: %symedit.model.category.class%
+
+symedit_events:
+    resources:
+        event:
+            classes:
+                model: SymEdit\Bundle\CoreBundle\Model\Event
+                form: SymEdit\Bundle\CoreBundle\Form\Type\EventType
+
+# Widget Configuration
+symedit_widget:
+    fragment:
+        strategy: esi
+    renderer:
+        widget: symedit.widget.renderer.widget
+    resources:
+        widget:
+            classes:
+                form: SymEdit\Bundle\CoreBundle\Form\Type\WidgetType
+
+# Theme Configuration
+symedit_theme:
+    theme_directory: %kernel.root_dir%/../themes
+    public_directory: themes
+    active_theme: default
+    namespace_overrides: [SymEdit]
+    templates:
+        bundles: [SymEditBundle]
+
+# Media Configuration
+symedit_media:
+    paths:
+        image: /media/image
+        file: /media/file
+
+# Shortcode Configuration
+symedit_shortcode:
+    settings:
+        icon: fontawesome4
+
+# Cache Configuration
+symedit_cache:
+    voters:
+        roles: [ROLE_ADMIN]
+
+# Sitemap Configuration
+symedit_sitemap:
+    models:
+        pages:
+            method: getRecursiveIterator
+            repository: symedit.repository.page
+            callbacks:
+                - getCrawl
+            lastmod: updatedAt
+            route: $route
+
+        blog_post:
+            method: findPublished
+            repository: symedit.repository.post
+            lastmod: updatedAt
+            route:
+                ignore: true
+                path: blog_slug_view
+                params:
+                    slug: $slug
+
+        blog_category:
+            method: findAll
+            repository: symedit.repository.category
+            route:
+                ignore: true
+                path: blog_category_view
+                params:
+                    slug: $slug
+
+        team_user:
+            method: findAll
+            repository: symedit.repository.admin_profile
+            callbacks:
+                - getDisplay
+            route:
+                ignore: true
+                path: team_view_slug
+                params:
+                    slug: $slug
+
+        events:
+            method: getUpcoming
+            repository: symedit.repository.event
+            route:
+                ignore: true
+                path: symedit_event_show
+                params:
+                    slug: $slug

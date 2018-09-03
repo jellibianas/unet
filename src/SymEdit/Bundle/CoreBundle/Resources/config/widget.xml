@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="symedit.widget.renderer.widget.class">SymEdit\Bundle\CoreBundle\Widget\Renderer\WidgetRenderer</parameter>
+        <parameter key="symedit.widget.strategy.contact_info.class">SymEdit\Bundle\CoreBundle\Widget\Strategy\ContactInfoStrategy</parameter>
+        <parameter key="symedit.widget.strategy.google_map.class">SymEdit\Bundle\CoreBundle\Widget\Strategy\GoogleMapStrategy</parameter>
+        <parameter key="symedit.widget.strategy.submenu.class">SymEdit\Bundle\CoreBundle\Widget\Strategy\SubmenuStrategy</parameter>
+        <parameter key="symedit.widget.strategy.list_children.class">SymEdit\Bundle\CoreBundle\Widget\Strategy\ListChildrenStrategy</parameter>
+    </parameters>
+
+    <services>
+        <!-- Renderers -->
+        <service id="symedit.widget.renderer.widget" class="%symedit.widget.renderer.widget.class%" parent="symedit_widget.renderer.widget" lazy="true">
+            <call method="setCurrentPage">
+                <argument type="service" id="symedit_page" on-invalid="null" />
+            </call>
+        </service>
+
+        <!-- Widget Strategies -->
+        <service id="symedit.widget.strategy.contact_info" class="%symedit.widget.strategy.contact_info.class%">
+            <argument type="service" id="symedit.repository.settings" />
+
+            <tag name="symedit_widget.widget_strategy" alias="contact_info" />
+        </service>
+
+        <service id="symedit.widget.strategy.google_map" class="%symedit.widget.strategy.google_map.class%">
+            <tag name="symedit_widget.widget_strategy" alias="google_map" />
+        </service>
+
+        <service id="symedit.widget.strategy.submenu" class="%symedit.widget.strategy.submenu.class%">
+            <tag name="symedit_widget.widget_strategy" alias="submenu" />
+        </service>
+
+        <service id="symedit.widget.strategy.list_children" class="%symedit.widget.strategy.list_children.class%">
+            <tag name="symedit_widget.widget_strategy" alias="list_children" />
+        </service>
+
+        <!-- Voters -->
+        <service id="symedit.widget.voter.current_page" class="SymEdit\Bundle\CoreBundle\Widget\Matcher\Voter\CurrentPageVoter">
+            <call method="setRequest">
+                <argument type="service" id="request_stack" />
+            </call>
+            <tag name="symedit_widget.voter" />
+        </service>
+    </services>
+</container>

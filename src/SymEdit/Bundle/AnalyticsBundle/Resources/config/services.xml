@@ -1,0 +1,57 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="symedit_analytics.tracker.class">SymEdit\Bundle\AnalyticsBundle\Analytics\Tracker</parameter>
+        <parameter key="symedit_analytics.recorder.class">SymEdit\Bundle\AnalyticsBundle\Analytics\Recorder</parameter>
+        <parameter key="symedit_analytics.reporter.class">SymEdit\Bundle\AnalyticsBundle\Report\Reporter</parameter>
+        <parameter key="symedit_analytics.twig.extension.class">SymEdit\Bundle\AnalyticsBundle\Twig\AnalyticsExtension</parameter>
+    </parameters>
+
+    <services>
+        <service id="symedit_analytics.entity_manager" class="Doctrine\ORM\EntityManager" public="false">
+            <factory service="doctrine" method="getManager" />
+        </service>
+
+        <!-- Tracker -->
+        <service id="symedit_analytics.tracker" class="%symedit_analytics.tracker.class%">
+            <argument type="service" id="symedit_analytics.entity_manager" />
+            <argument type="service" id="symedit.factory.visit" />
+            <argument>%symedit_analytics.tracker.models%</argument>
+        </service>
+
+        <!-- Recorder -->
+        <service id="symedit_analytics.recorder" class="%symedit_analytics.recorder.class%">
+            <argument type="service" id="symedit_analytics.entity_manager" />
+            <argument>%symedit.model.visit.class%</argument>
+            <argument>%symedit_analytics.tracker.models%</argument>
+        </service>
+
+        <!-- Reporter -->
+        <service id="symedit_analytics.reporter" class="%symedit_analytics.reporter.class%">
+            <argument type="service" id="symedit_analytics.entity_manager" />
+            <argument>%symedit.model.visit.class%</argument>
+            <argument>%symedit_analytics.tracker.models%</argument>
+            <!-- Replaced by Compiler Pass -->
+            <argument type="collection" />
+            <!-- Replaced by Compiler Pass -->
+            <argument type="collection" />
+        </service>
+
+        <!-- Cached Reporter -->
+        <service id="symedit_analytics.cached_reporter" class="SymEdit\Bundle\AnalyticsBundle\Report\CachedReporter" decorates="symedit_analytics.reporter">
+            <argument type="service" id="symedit_analytics.cached_reporter.inner" />
+            <argument type="service" id="doctrine_cache.providers.symedit_analytics" />
+        </service>
+
+        <!-- Twig Extension -->
+        <service id="symedit_analytics.twig.extension" class="%symedit_analytics.twig.extension.class%">
+            <argument type="service" id="symedit_analytics.tracker" />
+            <argument type="service" id="symedit_analytics.reporter" />
+            <tag name="twig.extension" />
+        </service>
+    </services>
+</container>

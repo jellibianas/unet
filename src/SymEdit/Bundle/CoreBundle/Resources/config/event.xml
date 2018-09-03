@@ -1,0 +1,86 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="symedit.listener.current_page.class">SymEdit\Bundle\CoreBundle\EventListener\CurrentPageListener</parameter>
+        <parameter key="symedit.listener.seo.class">SymEdit\Bundle\CoreBundle\EventListener\SeoControllerListener</parameter>
+        <parameter key="symedit.listener.exception.class">SymEdit\Bundle\CoreBundle\EventListener\ExceptionListener</parameter>
+
+        <parameter key="symedit.event_subscriber.breadcrumb.class">SymEdit\Bundle\CoreBundle\EventListener\Subscriber\BreadcrumbSubscriber</parameter>
+        <parameter key="symedit.event_subscriber.analytics.class">SymEdit\Bundle\CoreBundle\EventListener\Subscriber\AnalyticsSubscriber</parameter>
+        <parameter key="symedit.event_subscriber.page.class">SymEdit\Bundle\CoreBundle\EventListener\Subscriber\PageSubscriber</parameter>
+        <parameter key="symedit.event_subscriber.post.class">SymEdit\Bundle\CoreBundle\EventListener\Subscriber\PostSubscriber</parameter>
+    </parameters>
+
+    <services>
+        <!-- Current Page Listener -->
+        <service id="symedit.listener.controller_listener" class="%symedit.listener.current_page.class%">
+            <argument type="service" id="service_container" />
+            <argument type="service" id="symedit.repository.page" />
+            <argument type="service" id="symedit.factory.page" />
+
+            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" priority="-128" />
+        </service>
+
+        <!-- SEO Listener -->
+        <service id="symedit.listener.seo" class="%symedit.listener.seo.class%">
+            <argument type="service" id="symedit_seo.seo_manager" />
+            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" priority="6" />
+        </service>
+
+        <!-- Kernel Exception -->
+        <service id="symedit.listener.exception" class="%symedit.listener.exception.class%">
+            <argument type="service" id="logger" />
+            <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" />
+        </service>
+
+        <!-- Breadcrumb Listener -->
+        <service id="symedit.event_subscriber.breadcrumb" class="%symedit.event_subscriber.breadcrumb.class%">
+            <argument type="service" id="symedit.breadcrumbs" />
+            <tag name="kernel.event_subscriber" />
+        </service>
+
+        <!-- Analytics Subscriber -->
+        <service id="symedit.event_subscriber.analytics" class="%symedit.event_subscriber.analytics.class%">
+            <argument type="service" id="symedit_analytics.tracker" />
+            <tag name="kernel.event_subscriber" />
+        </service>
+
+        <!-- Json Ld Subscriber -->
+        <service id="symedit.event_subscriber.json_ld" class="SymEdit\Bundle\CoreBundle\EventListener\Subscriber\JsonLdSubscriber">
+            <argument type="service" id="isometriks_json_ld_dumper.registry" />
+            <argument type="service" id="isometriks_json_ld_dumper.mapping_configuration" />
+
+            <tag name="kernel.event_subscriber" />
+        </service>
+
+        <!-- Page Subscriber -->
+        <service id="symedit.event_subscriber.page" class="%symedit.event_subscriber.page.class%">
+            <tag name="kernel.event_subscriber" />
+        </service>
+
+        <!-- Page Display Options Subscriber -->
+        <service id="symedit.event_subscriber.page_display_options" class="SymEdit\Bundle\CoreBundle\EventListener\Subscriber\PageDisplayOptionsSubscriber">
+            <argument type="service" id="symedit.repository.widget_area" />
+
+            <tag name="kernel.event_subscriber" />
+        </service>
+
+        <!-- Post Subscriber -->
+        <service id="symedit.event_subscriber.post" class="%symedit.event_subscriber.post.class%">
+            <argument type="service" id="session" />
+            <argument type="service" id="router" />
+            <tag name="kernel.event_subscriber" />
+        </service>
+
+        <!-- Form Builder Emailer -->
+        <service id="symedit.event_subscriber.form_builder" class="SymEdit\Bundle\CoreBundle\EventListener\Subscriber\FormBuilderSubscriber">
+            <argument type="service" id="symedit.mailer" />
+            <tag name="kernel.event_subscriber" />
+        </service>
+    </services>
+
+</container>

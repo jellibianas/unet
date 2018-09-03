@@ -1,0 +1,63 @@
+admin_file:
+    path: /
+    methods: [GET]
+    defaults:
+        _controller: symedit.controller.file:indexAction
+        _sylius:
+            template: "@SymEdit/Admin/File/index.html.twig"
+            paginate: false
+            limit: false
+
+admin_file_json:
+    path: /list.{_format}
+    requirements:
+        _format: json
+    defaults:
+        _format: json
+        _controller: symedit.controller.file:jsonAction
+        _sylius:
+            paginate: false
+
+admin_file_dialog:
+    path: /dialog
+    methods: [GET, POST]
+    defaults:
+        _controller: symedit.controller.file:indexAction
+        _sylius:
+            template: "@SymEdit/Admin/File/dialog.html.twig"
+            paginate: false
+            limit: false
+
+admin_file_create:
+    path: /new
+    methods: [GET, POST]
+    defaults:
+        _controller: symedit.controller.file:createAction
+        _sylius:
+            template: "@SymEdit/Admin/File/new.html.twig"
+            redirect: admin_file
+
+admin_file_quick_upload:
+    path: /quick-upload
+    methods: [POST]
+    defaults:
+        _controller: symedit.controller.file:quickUploadAction
+
+admin_file_update:
+    path: /{id}/edit
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: symedit.controller.file:updateAction
+        _sylius:
+            template: "@SymEdit/Admin/File/edit.html.twig"
+            redirect:
+                route: admin_file_update
+                parameters: { id: $id }
+
+admin_file_delete:
+    path: /{id}/delete
+    methods: [DELETE]
+    defaults:
+        _controller: symedit.controller.file:deleteAction
+        _sylius:
+            redirect: admin_file

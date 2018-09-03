@@ -1,0 +1,38 @@
+admin_category:
+    path: /
+    methods: [GET]
+    defaults:
+        _controller: symedit.controller.category:indexAction
+        _sylius:
+            template: "@SymEdit/Admin/Category/index.html.twig"
+            paginate: false
+            repository:
+                method: findRoot
+
+admin_category_create:
+    path: /new
+    methods: [GET, POST]
+    defaults:
+        _controller: symedit.controller.category:createAction
+        _sylius:
+            template: "@SymEdit/Admin/Category/new.html.twig"
+            redirect: admin_category
+
+admin_category_update:
+    path: /{id}/edit
+    methods: [GET, PUT, POST]
+    defaults:
+        _controller: symedit.controller.category:updateAction
+        _sylius:
+            template: "@SymEdit/Admin/Category/edit.html.twig"
+            redirect:
+                route: admin_category_update
+                parameters: { id: $id }
+
+admin_category_delete:
+    path: /{id}/delete
+    methods: [DELETE]
+    defaults:
+        _controller: symedit.controller.category:deleteAction
+        _sylius:
+            redirect: admin_category
